@@ -6,7 +6,7 @@ const Pizza = () => {
 
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/pizzas/p001")
+    fetch("https://pizzeria-backend-ttcm.onrender.com/api/pizzas/p001")
       .then((response) => response.json())
       .then((data) => {
         setPizza(data);
