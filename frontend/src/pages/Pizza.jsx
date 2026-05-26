@@ -8,7 +8,7 @@ const Pizza = () => {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/pizzas/${id}`) 
+    fetch(`https://pizzeria-backend-ttcm.onrender.com/api/pizzas/${id}`) 
       .then((res) => res.json())
       .then((data) => setPizza(data))
       .catch((err) => console.error("Error:", err));

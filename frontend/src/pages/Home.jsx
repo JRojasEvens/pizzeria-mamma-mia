@@ -5,7 +5,7 @@ const Home = () => {
   const [pizzas, setPizzas] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/pizzas")
+    fetch("https://pizzeria-backend-ttcm.onrender.com/api/pizzas")
       .then((res) => res.json())
       .then((data) => setPizzas(data))
       .catch((err) => console.error("Error:", err));
