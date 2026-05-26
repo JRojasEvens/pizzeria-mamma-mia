@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useCart } from "../context/CartContext";
 import { useUser } from "../context/UserContext";
 import { Link } from "react-router-dom";
@@ -5,6 +6,43 @@ import { Link } from "react-router-dom";
 const Cart = () => {
   const { cart, removeFromCart, increaseQuantity, decreaseQuantity, total } = useCart();
   const { token } = useUser();
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleCheckout = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("http://localhost:5000/api/checkouts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ cart }),
+      });
+      if (response.ok) {
+        setSuccess(true);
+      }
+    } catch (error) {
+      console.error("Error al procesar el pago:", error);
+    }
+    setLoading(false);
+  };
+
+  if (success) {
+    return (
+      <div style={{ background: "#fafafa", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ background: "white", borderRadius: "20px", boxShadow: "0 8px 32px rgba(0,0,0,0.12)", padding: "60px 40px", textAlign: "center", maxWidth: "420px", width: "100%" }}>
+          <p style={{ fontSize: "4rem", margin: 0 }}>✅</p>
+          <h3 style={{ fontWeight: "800", margin: "16px 0 8px" }}>¡Compra realizada!</h3>
+          <p style={{ color: "#888", marginBottom: "24px" }}>Tu pedido ha sido procesado con éxito.</p>
+          <Link to="/" style={{ display: "inline-block", background: "#dc3545", color: "white", textDecoration: "none", padding: "12px 28px", borderRadius: "12px", fontWeight: "700" }}>
+            🍕 Volver al inicio
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ background: "#fafafa", minHeight: "100vh", padding: "40px 20px" }}>
@@ -19,7 +57,7 @@ const Cart = () => {
             <p style={{ fontSize: "4rem", margin: 0 }}>🍕</p>
             <h4 style={{ color: "#555", marginTop: "16px" }}>Tu carrito está vacío</h4>
             <p style={{ color: "#888" }}>¡Agrega algunas pizzas!</p>
-            <Link to="/" style={{ display: "inline-block", marginTop: "12px", background: "#dc3545", color: "white", textDecoration: "none", padding: "10px 24px", borderRadius: "10px", fontWeight: "600" }}>
+            <Link to="/" style={{ display: "inline-block", marginTop: "12px", background: "#000000", color: "white", textDecoration: "none", padding: "10px 24px", borderRadius: "10px", fontWeight: "600" }}>
               Ver pizzas
             </Link>
           </div>
@@ -61,7 +99,7 @@ const Cart = () => {
                     </span>
                     <button
                       onClick={() => increaseQuantity(item.id)}
-                      style={{ background: "#dc3545", border: "none", borderRadius: "50%", width: "28px", height: "28px", cursor: "pointer", fontWeight: "700", fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center", color: "white" }}
+                      style={{ background: "#000000", border: "none", borderRadius: "50%", width: "28px", height: "28px", cursor: "pointer", fontWeight: "700", fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center", color: "white" }}
                     >
                       +
                     </button>
@@ -83,6 +121,7 @@ const Cart = () => {
                 </div>
               ))}
             </div>
+
             <div style={{ marginTop: "20px", background: "linear-gradient(135deg, #1a1a1a, #2d2d2d)", borderRadius: "16px", padding: "20px 28px", display: "flex", justifyContent: "space-between", alignItems: "center", boxShadow: "0 4px 16px rgba(0,0,0,0.2)" }}>
               <div>
                 <p style={{ color: "#888", margin: 0, fontSize: "0.85rem" }}>
@@ -97,7 +136,8 @@ const Cart = () => {
               </div>
 
               <button
-                disabled={!token}
+                onClick={handleCheckout}
+                disabled={!token || loading}
                 style={{
                   background: token ? "#dc3545" : "#555",
                   color: "white",
@@ -111,7 +151,7 @@ const Cart = () => {
                   transition: "background 0.2s",
                 }}
               >
-                {token ? "💳 Pagar" : "🔒 Inicia sesión para pagar"}
+                {loading ? "Procesando..." : token ? "💳 Pagar" : "🔒 Inicia sesión para pagar"}
               </button>
             </div>
           </>
