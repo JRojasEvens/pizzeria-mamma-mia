@@ -1,16 +1,38 @@
-# React + Vite
+🍕 Pizzería Mamma Mía
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+Proyecto desplegado en Vercel :https://pizzeria-mamma-mia-seven.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+-Cómo ejecutar el proyecto
 
-## React Compiler
+Requisitos previos
+-Node.js v18 o superior
+-npm v9 o superior
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+El proyecto tiene dos partes que deben estar corriendo al mismo tiempo en terminales separadas.
 
-## Expanding the ESLint configuration
+-Clonar el repositorio
+bashgit clone https://github.com/JRojasEvens/pizzeria-mamma-mia.git
+cd pizzeria-mamma-mia
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+-Levantar el Backend
+bashcd backend
+npm install
+npm start
+
+
+-Levantar el Frontend
+Abre una nueva terminal:
+bashcd frontend
+npm install
+npm run dev
+
+
+Credenciales de prueba:
+
+Email:    test@example.com
+Password: 123123
+
+O regístrate con cualquier email y contraseña desde /register.
+
+ 
