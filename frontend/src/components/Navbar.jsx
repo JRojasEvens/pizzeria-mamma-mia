@@ -1,42 +1,34 @@
-import { formatPrice } from "../utils/helpers";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const total = 25000;
-  const token = false;  
-
   return (
-    <nav
-      style={{
-        background: "#1a1a1a",
-        padding: "0.75rem 1.5rem",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: "1rem",
-      }}
-    >
-      <span style={{ color: "#fff", fontWeight: "bold", fontSize: "1.1rem" }}>
-        🍕 Pizzería Mamma Mia!
-      </span>
-      <div style={{ display: "flex", gap: "0.5rem" }}>
-        <button className="btn btn-secondary btn-sm">🍕 Home</button>{token ? (
-          <>
-            <button className="btn btn-outline-light btn-sm">🔓 Profile</button>
-            <button className="btn btn-outline-light btn-sm">🔒 Logout</button>
-          </>
-        ) : (
-          <>
-            <button className="btn btn-outline-light btn-sm">🔐 Login</button>
-            <button className="btn btn-outline-light btn-sm">🔐 Register</button>
-          </>
-        )}
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+      <Link className="navbar-brand" to="/">
+        🍕 Pizzería Mamma Mía
+      </Link>
+
+      <div className="collapse navbar-collapse">
+        <ul className="navbar-nav me-auto">
+          <li className="nav-item">
+            <Link className="nav-link" to="/">Home</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/login">Login</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/register">Register</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/profile">Profile</Link>
+          </li>
+        </ul>
+
+        <Link to="/cart" className="btn btn-warning">
+          🛒 Total: $0
+        </Link>
       </div>
-      <button className="btn btn-warning btn-sm">
-        🛒 Total: ${formatPrice(total)}
-      </button>
     </nav>
   );
 };
 
 export default Navbar;
-
